@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lecteur{% endblock %}
+
+{% block body %}
+    <h1>Lecteur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ lecteur.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ lecteur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ lecteur.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ lecteur.email }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ lecteur.age }}</td>
+            </tr>
+            <tr>
+                <th>Sex</th>
+                <td>{{ lecteur.sex }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_lecteur_index') }}">back to list</a>
+
+    <a href="{{ path('app_lecteur_edit', {'id': lecteur.id}) }}">edit</a>
+
+    {{ include('lecteur/_delete_form.html.twig') }}
+{% endblock %}

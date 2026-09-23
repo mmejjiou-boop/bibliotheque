@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lecteur index{% endblock %}
+
+{% block body %}
+    <h1>Lecteur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lecteur in lecteurs %}
+            <tr>
+                <td>{{ lecteur.id }}</td>
+                <td>{{ lecteur.nom }}</td>
+                <td>{{ lecteur.prenom }}</td>
+                <td>{{ lecteur.email }}</td>
+                <td>{{ lecteur.age }}</td>
+                <td>{{ lecteur.sex }}</td>
+                <td>
+                    <a href="{{ path('app_lecteur_show', {'id': lecteur.id}) }}">show</a>
+                    <a href="{{ path('app_lecteur_edit', {'id': lecteur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_lecteur_new') }}">Create new</a>
+{% endblock %}

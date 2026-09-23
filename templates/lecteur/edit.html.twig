@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Lecteur{% endblock %}
+
+{% block body %}
+    <h1>Edit Lecteur</h1>
+
+    {{ include('lecteur/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_lecteur_index') }}">back to list</a>
+
+    {{ include('lecteur/_delete_form.html.twig') }}
+{% endblock %}

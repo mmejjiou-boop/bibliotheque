@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Lecteur{% endblock %}
+
+{% block body %}
+    <h1>Create new Lecteur</h1>
+
+    {{ include('lecteur/_form.html.twig') }}
+
+    <a href="{{ path('app_lecteur_index') }}">back to list</a>
+{% endblock %}
