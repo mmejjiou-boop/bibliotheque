@@ -23,12 +23,13 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
             <div class="container">
-                <a class="navbar-brand" href="/">📚 Bibliothèque</a>
+                <a class="navbar-brand" href=" {{ path('app_home') }} ">📚 Bibliothèque</a>
                 <div class="navbar-nav">
                     <a class="nav-link" href="{{ path('app_genre_index') }}">Genres</a>
                     <a class="nav-link" href="{{ path('app_livre_index') }}">Livres</a>
                     <a class="nav-link" href="{{ path('app_lecteur_index') }}">Lecteurs</a>
                     <a class="nav-link" href="{{ path('app_emprunt_index') }}">Emprunts</a>
+                    <a class="nav-link" href="{{ path('app_recherche_index') }}">Recherches</a>
                 </div>
             </div>
         </nav>

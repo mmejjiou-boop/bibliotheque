@@ -16,28 +16,22 @@ class EmpruntRepository extends ServiceEntityRepository
         parent::__construct($registry, Emprunt::class);
     }
 
-//    /**
-//     * @return Emprunt[] Returns an array of Emprunt objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Emprunt
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Emprunts terminés dont le livre a été rendu moins de $jours jours après l'emprunt.
+     *
+     * @return Emprunt[]
+     */
+    public function findRendusEnMoinsDe(int $jours = 7): array
+    {
+        return $this->createQueryBuilder('e')
+            ->addSelect('l', 'r')
+            ->innerJoin('e.livre', 'l')
+            ->innerJoin('e.lecteur', 'r')
+            ->andWhere('e.dateRetourEffective IS NOT NULL')
+            ->andWhere('DATE_DIFF(e.dateRetourEffective, e.dateEmprunt) < :jours')
+            ->setParameter('jours', $jours)
+            ->orderBy('e.dateRetourEffective', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

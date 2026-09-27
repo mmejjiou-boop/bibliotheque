@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lecteurs – genre préféré {{ genre.nom }}{% endblock %}
+
+{% block body %}
+    <h1>Lecteurs dont le genre préféré est « {{ genre.nom }} »</h1>
+    <p class="text-muted">Le genre préféré d'un lecteur est le genre qu'il a le plus emprunté.</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Nombre d'emprunts</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lecteur in lecteurs %}
+            <tr>
+                <td><a href="{{ path('app_lecteur_show', {'id': lecteur.id}) }}">{{ lecteur.nom }}</a></td>
+                <td>{{ lecteur.prenom }}</td>
+                <td>{{ lecteur.email }}</td>
+                <td>{{ lecteur.emprunts|length }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="4">Aucun lecteur trouvé</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recherche_index') }}">Retour aux recherches</a>
+{% endblock %}

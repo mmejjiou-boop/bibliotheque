@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livres rendus en moins de 7 jours{% endblock %}
+
+{% block body %}
+    <h1>Livres rendus en moins de 7 jours</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Livre</th>
+                <th>Lecteur</th>
+                <th>Date d'emprunt</th>
+                <th>Date de retour</th>
+                <th>Durée</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for emprunt in emprunts %}
+            <tr>
+                <td>{{ emprunt.livre.titre }}</td>
+                <td>{{ emprunt.lecteur.prenom }} {{ emprunt.lecteur.nom }}</td>
+                <td>{{ emprunt.dateEmprunt|date('d/m/Y') }}</td>
+                <td>{{ emprunt.dateRetourEffective|date('d/m/Y') }}</td>
+                <td>{{ emprunt.dateEmprunt.diff(emprunt.dateRetourEffective).days }} jour(s)</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5">Aucun livre rendu en moins de 7 jours</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recherche_index') }}">Retour aux recherches</a>
+{% endblock %}

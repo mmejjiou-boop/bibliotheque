@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherches{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Recherches</h1>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h5 class="card-title">Livres empruntés par un lecteur</h5>
+                <form action="{{ path('app_recherche_livres_lecteur') }}" method="get" class="d-flex gap-2">
+                    <select name="lecteur" class="form-select" required>
+                        {% for lecteur in lecteurs %}
+                            <option value="{{ lecteur.id }}">{{ lecteur.prenom }} {{ lecteur.nom }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-primary">Afficher</button>
+                </form>
+            </div></div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h5 class="card-title">Livres d'un genre</h5>
+                <form action="{{ path('app_recherche_livres_genre') }}" method="get" class="d-flex gap-2">
+                    <select name="genre" class="form-select" required>
+                        {% for genre in genres %}
+                            <option value="{{ genre.id }}">{{ genre.nom }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-primary">Afficher</button>
+                </form>
+            </div></div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h5 class="card-title">Lecteurs dont le genre préféré est…</h5>
+                <form action="{{ path('app_recherche_lecteurs_genre') }}" method="get" class="d-flex gap-2">
+                    <select name="genre" class="form-select" required>
+                        {% for genre in genres %}
+                            <option value="{{ genre.id }}">{{ genre.nom }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-primary">Afficher</button>
+                </form>
+            </div></div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h5 class="card-title">Autres listes</h5>
+                <ul class="mb-0">
+                    <li><a href="{{ path('app_recherche_retours_rapides') }}">Livres rendus en moins de 7 jours</a></li>
+                    <li><a href="{{ path('app_recherche_classement', {ordre: 'desc'}) }}">Livres les plus empruntés (décroissant)</a></li>
+                    <li><a href="{{ path('app_recherche_classement', {ordre: 'asc'}) }}">Livres les plus empruntés (croissant)</a></li>
+                    <li><a href="{{ path('app_recherche_jamais_empruntes') }}">Livres jamais empruntés</a></li>
+                </ul>
+            </div></div>
+        </div>
+    </div>
+{% endblock %}

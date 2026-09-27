@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="text-center py-5">
+        <h1>📚 Bienvenue sur Bibliothèque</h1>
+        <p class="lead">Gérez vos livres, lecteurs, genres et emprunts.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Genres</h5>
+                    <a href="{{ path('app_genre_index') }}" class="btn btn-outline-dark">Voir</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Livres</h5>
+                    <a href="{{ path('app_livre_index') }}" class="btn btn-outline-dark">Voir</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Lecteurs</h5>
+                    <a href="{{ path('app_lecteur_index') }}" class="btn btn-outline-dark">Voir</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Emprunts</h5>
+                    <a href="{{ path('app_emprunt_index') }}" class="btn btn-outline-dark">Voir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

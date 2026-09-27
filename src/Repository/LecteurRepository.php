@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Genre;
 use App\Entity\Lecteur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,43 @@ class LecteurRepository extends ServiceEntityRepository
         parent::__construct($registry, Lecteur::class);
     }
 
-//    /**
-//     * @return Lecteur[] Returns an array of Lecteur objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Lecteurs dont le genre préféré (le genre qu'ils ont le plus emprunté) est $genre.
+     * En cas d'égalité entre plusieurs genres, le lecteur est retenu pour chacun d'eux.
+     *
+     * @return Lecteur[]
+     */
+    public function findByGenrePrefere(Genre $genre): array
+    {
+        $rows = $this->createQueryBuilder('r')
+            ->select('r.id AS lecteurId', 'IDENTITY(l.genre) AS genreId', 'COUNT(e.id) AS nb')
+            ->innerJoin('r.emprunts', 'e')
+            ->innerJoin('e.livre', 'l')
+            ->groupBy('r.id', 'l.genre')
+            ->getQuery()
+            ->getArrayResult();
 
-//    public function findOneBySomeField($value): ?Lecteur
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $parLecteur = [];
+        foreach ($rows as $row) {
+            $parLecteur[$row['lecteurId']][(int) $row['genreId']] = (int) $row['nb'];
+        }
+
+        $ids = [];
+        foreach ($parLecteur as $id => $genres) {
+            if (($genres[$genre->getId()] ?? 0) === max($genres)) {
+                $ids[] = $id;
+            }
+        }
+
+        if (!$ids) {
+            return [];
+        }
+
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->orderBy('r.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

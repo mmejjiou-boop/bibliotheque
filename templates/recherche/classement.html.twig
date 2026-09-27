@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livres les plus empruntés{% endblock %}
+
+{% block body %}
+    <h1>Livres les plus empruntés</h1>
+
+    <div class="btn-group mb-3">
+        <a href="{{ path('app_recherche_classement', {ordre: 'desc'}) }}" class="btn btn-outline-primary {{ ordre == 'desc' ? 'active' }}">Décroissant</a>
+        <a href="{{ path('app_recherche_classement', {ordre: 'asc'}) }}" class="btn btn-outline-primary {{ ordre == 'asc' ? 'active' }}">Croissant</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Genre</th>
+                <th>Nombre d'emprunts</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ligne in classement %}
+            <tr>
+                <td><a href="{{ path('app_livre_show', {'id': ligne.livre.id}) }}">{{ ligne.livre.titre }}</a></td>
+                <td>{{ ligne.livre.genre.nom }}</td>
+                <td>{{ ligne.nbEmprunts }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="3">Aucun livre</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recherche_index') }}">Retour aux recherches</a>
+{% endblock %}
